@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Pixel Art Project</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    if (new URLSearchParams(location.search).get("openColoring") === "1") {
+      document.documentElement.classList.add("direct-coloring");
+    }
+  </script>
+</head>
+<body>
+  <div id="directColoringStatus" role="status" aria-live="polite">
+    <p id="directColoringMessage">Preparing your coloring page…</p>
+    <a class="button secondary" href="index.html">Back to projects</a>
+  </div>
+  <main class="app">
+    <header class="header">
+      <div>
+        <p class="eyebrow">PIXEL ART WORKSHOP</p>
+        <h1>Pixel Art Numbering Tool</h1>
+        <p class="subtitle">Turn pixel art into a numbered grid with a HEX color key.</p>
+      </div>
+      <div class="generator-header-actions">
+        <a class="button secondary" href="index.html">Projects</a>
+        <button id="resetBtn" class="button secondary" type="button">Reset</button>
+      </div>
+    </header>
+
+    <section class="controls card">
+      <div class="upload-area">
+        <label for="imageInput" class="upload-label">Choose an image</label>
+        <input id="imageInput" type="file" accept="image/*">
+        <span id="fileName" class="muted">No image selected</span>
+      </div>
+
+      <input id="columnsInput" type="hidden" value="32">
+      <input id="rowsInput" type="hidden" value="32">
+      <input id="colorLimitInput" type="hidden" value="64">
+      <input id="cellSizeInput" type="hidden" value="28">
+
+      <div class="control-grid">
+        <label>
+          Number labels
+          <select id="labelMode">
+            <option value="number">Color number</option>
+            <option value="hex">Short HEX</option>
+            <option value="none">Hide labels</option>
+          </select>
+        </label>
+        <label class="checkbox-label">
+          <input id="showGridInput" type="checkbox" checked>
+          Show grid lines
+        </label>
+        <label class="checkbox-label">
+          <input id="whiteBlocksInput" type="checkbox">
+          White blocks
+        </label>
+      </div>
+
+      <div class="actions">
+        <button id="generateBtn" class="button primary" type="button" disabled>Generate numbered grid</button>
+        <button id="downloadPngBtn" class="button secondary" type="button" disabled>Download original PNG</button>
+        <button id="downloadSvgBtn" class="button secondary" type="button" disabled>Download original as SVG</button>
+        <button id="coloringBtn" class="button secondary" type="button" disabled>Color this grid</button>
+      </div>
+      <p id="status" class="status" aria-live="polite">Choose an image to begin. Pixel art with clearly defined square pixels works best.</p>
+    </section>
+
+    <section id="results" class="results hidden">
+      <div class="preview-heading">
+        <div>
+          <h2>Numbered grid</h2>
+          <p id="dimensions" class="muted"></p>
+        </div>
+        <p id="summary" class="muted"></p>
+      </div>
+      <div class="canvas-card card">
+        <div class="canvas-scroll">
+          <canvas id="resultCanvas" aria-label="Generated numbered pixel art"></canvas>
+        </div>
+      </div>
+
+      <div class="legend-section">
+        <div class="legend-heading">
+          <div>
+            <h2>Color key</h2>
+            <p class="muted">Each number maps to one HEX color.</p>
+          </div>
+          <button id="copyLegendBtn" class="button secondary" type="button" disabled>Copy color key</button>
+        </div>
+        <div id="legend" class="legend-grid"></div>
+      </div>
+    </section>
+  </main>
+  <script src="project-store.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
