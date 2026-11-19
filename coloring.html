@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Your Pixel Art</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="coloring-page">
+  <main class="app coloring-app">
+    <nav class="coloring-tool-rail" aria-label="Coloring toolbar">
+      <button class="tool-rail-button" type="button" data-tool-panel="palettePanel" aria-label="Palette" aria-controls="coloringToolPanel" aria-pressed="false" title="Palette">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 1.2-3.1 1.7 1.7 0 0 1 1.1-3h1.1A4.4 4.4 0 0 0 21 10.5C21 6.4 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/><circle cx="17" cy="10.5" r="1"/></svg>
+      </button>
+      <button class="tool-rail-button" type="button" data-tool-panel="optionsPanel" aria-label="Coloring options" aria-controls="coloringToolPanel" aria-pressed="false" title="Options">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg>
+      </button>
+      <button class="tool-rail-button" type="button" data-tool-panel="exportPanel" aria-label="Save coloring" aria-controls="coloringToolPanel" aria-pressed="false" title="Export">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 16v4h14v-4"/></svg>
+      </button>
+      <span class="tool-rail-divider" aria-hidden="true"></span>
+      <button id="undoColoringBtn" class="tool-rail-button" type="button" aria-label="Undo last coloring change" title="Undo" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a7 7 0 0 1 0 14h-2"/></svg>
+      </button>
+    </nav>
+
+    <button id="returnToProjectsBtn" class="coloring-exit-button" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 18-6-6 6-6"/><path d="M8 12h12"/></svg>
+      <span>Back to Projects</span>
+    </button>
+
+    <aside id="coloringToolPanel" class="coloring-tool-panel" aria-label="Coloring tools" hidden>
+      <section id="palettePanel" class="tool-panel-section" aria-labelledby="palettePanelTitle">
+        <header class="tool-panel-heading">
+          <div>
+            <p class="eyebrow">COLOR YOUR ART</p>
+            <h1 id="palettePanelTitle">Palette</h1>
+          </div>
+          <span class="tool-panel-hint">Choose a color, then tap or drag on the grid.</span>
+        </header>
+        <div class="palette-editor">
+          <label for="colorPicker">Custom color
+            <input id="colorPicker" type="color" value="#E53935">
+          </label>
+          <button id="addColorBtn" class="button primary" type="button">Add color</button>
+        </div>
+        <div id="palette" class="palette-list" aria-label="Your color palette"></div>
+      </section>
+
+      <section id="optionsPanel" class="tool-panel-section" aria-labelledby="optionsPanelTitle" hidden>
+        <header class="tool-panel-heading">
+          <div>
+            <p class="eyebrow">WORKSPACE</p>
+            <h2 id="optionsPanelTitle">Coloring options</h2>
+          </div>
+        </header>
+        <label class="tool-option-label" for="fillMode">Fill behavior
+          <select id="fillMode">
+            <option value="cell">One cell at a time</option>
+            <option value="number">All cells with this number</option>
+          </select>
+        </label>
+        <div class="tool-panel-actions">
+          <button id="fillPaletteBtn" class="button secondary" type="button" disabled>Fill with image colors</button>
+          <button id="clearColorsBtn" class="button secondary" type="button">Clear coloring</button>
+        </div>
+      </section>
+
+      <section id="exportPanel" class="tool-panel-section" aria-labelledby="exportPanelTitle" hidden>
+        <header class="tool-panel-heading">
+          <div>
+            <p class="eyebrow">FINISHING</p>
+            <h2 id="exportPanelTitle">Save your work</h2>
+          </div>
+        </header>
+        <p class="tool-panel-description">Export your current colors as a clean PNG without numbers or grid lines.</p>
+        <button id="saveColoringPngBtn" class="button primary export-button" type="button" disabled>Save colored PNG</button>
+      </section>
+
+      <p id="coloringStatus" class="status tool-panel-status" aria-live="polite">Add a color to your palette, select it, then click a cell.</p>
+    </aside>
+
+    <section class="coloring-workspace">
+      <div class="coloring-workspace-heading">
+        <div>
+          <h2>Coloring grid</h2>
+          <p id="coloringDimensions" class="muted"></p>
+        </div>
+        <div class="zoom-controls" aria-label="Grid zoom controls">
+          <button id="zoomOutBtn" class="button secondary" type="button" aria-label="Zoom out">−</button>
+          <output id="zoomLevel" class="zoom-level">100%</output>
+          <button id="zoomInBtn" class="button secondary" type="button" aria-label="Zoom in">+</button>
+          <button id="fitGridBtn" class="button secondary" type="button">Fit sheet</button>
+        </div>
+      </div>
+      <div class="canvas-card card coloring-canvas-card">
+        <div id="canvasViewport" class="canvas-viewport" aria-label="Zoomable coloring sheet">
+          <canvas id="coloringCanvas" class="coloring-canvas" aria-label="Interactive pixel art coloring grid"></canvas>
+          <svg id="coloringNumberLayer" class="coloring-number-layer" aria-hidden="true"></svg>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="leaveColoringDialog" class="leave-coloring-dialog" aria-labelledby="leaveColoringTitle">
+      <h2 id="leaveColoringTitle">Leave coloring?</h2>
+      <p>Your progress is saved automatically. Are you sure you want to return to Projects?</p>
+      <p id="leaveSaveError" class="leave-save-error" role="alert" hidden>Your latest changes could not be saved. Stay here and try again.</p>
+      <div class="leave-coloring-actions">
+        <button id="cancelLeaveBtn" class="button secondary" type="button">Stay here</button>
+        <button id="confirmLeaveBtn" class="button primary" type="button">Return to Projects</button>
+      </div>
+    </dialog>
+  </main>
+  <script src="project-store.js"></script>
+  <script src="coloring.js"></script>
+</body>
+</html>
