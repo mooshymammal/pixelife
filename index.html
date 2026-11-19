@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Art Projects</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="project-library-page">
+  <main class="app project-library">
+    <header class="project-library-header">
+      <div>
+        <p class="eyebrow">PixeLife</p>
+        <h1>Your projects</h1>
+        <p class="subtitle">Create, save, and continue coloring pixel art from your images.</p>
+      </div>
+      <div class="project-create-control">
+        <input id="newProjectImage" class="project-upload-input" type="file" accept="image/*">
+        <label class="button primary project-create-button" for="newProjectImage">Choose an image</label>
+      </div>
+    </header>
+
+    <section class="project-library-section" aria-labelledby="savedProjectsTitle">
+      <div class="project-library-heading">
+        <div>
+          <h2 id="savedProjectsTitle">Saved pixel arts</h2>
+          <p class="muted">Projects are saved automatically in this browser.</p>
+        </div>
+        <span id="projectCount" class="project-count"></span>
+      </div>
+      <p id="projectLibraryStatus" class="status" role="status" aria-live="polite">Loading projects…</p>
+      <div id="projectList" class="project-grid"></div>
+      <div id="emptyProjects" class="empty-projects card" hidden>
+        <h3>No projects yet</h3>
+        <p class="muted">Choose an image above to create your first saved pixel art project.</p>
+      </div>
+    </section>
+  </main>
+  <script src="project-store.js"></script>
+  <script src="project-library.js"></script>
+</body>
+</html>
